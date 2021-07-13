@@ -36,9 +36,9 @@ jobs:
           override: true
           profile: minimal
       - name: Build
-        run: make build CARGOFLAGS="--verbose"
+        run: make CARGOFLAGS="--verbose"
       - name: Run tests
-        run: make check CARGOFLAGS="--verbose"
+        run: make test CARGOFLAGS="--verbose"
 
   rustfmt:
     name: rustfmt

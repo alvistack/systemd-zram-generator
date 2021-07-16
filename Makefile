@@ -1,5 +1,8 @@
 # SPDX-License-Identifier: MIT
 
+VERSION ?= 0.3.2+git$(shell date "+%Y%m%d")
+DATE ?= $(shell date "+%a %b %d %Y")
+
 INSTALL = install
 CARGO = cargo
 CARGOFLAGS =
@@ -61,3 +64,21 @@ install.man:
 clean:
 	@$(CARGO) clean
 	@rm -f units/systemd-zram-setup@.service
+
+.PHONY: dist-gzip
+dist-gzip:
+	tar -zcv \
+		--exclude='./.git' \
+		-f ../zram-generator_$(VERSION).orig.tar.gz .
+
+.PHONY: deb
+deb:
+	dch -v $(VERSION)-1 __VERSION__
+	sed "/^\s*\* __VERSION__/d" -i debian/changelog
+	debuild -us -uc
+
+.PHONY: rpm
+rpm:
+	cp zram-generator.spec ../zram-generator_$(VERSION)-1.spec
+	sed "s/__VERSION__/$(VERSION)/g" -i ../zram-generator_$(VERSION)-1.spec
+	sed "s/__DATE__/$(DATE)/g" -i ../zram-generator_$(VERSION)-1.spec

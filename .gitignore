@@ -2,5 +2,12 @@
 *~
 /.cargo/config.toml
 /Cargo.lock
+/debian/*.log
+/debian/*.substvars
+/debian/.debhelper
+/debian/debhelper-build-stamp
+/debian/files
+/debian/zram-generator-defaults/
+/debian/zram-generator/
 /target
 /vendor

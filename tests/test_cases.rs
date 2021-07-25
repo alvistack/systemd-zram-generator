@@ -175,11 +175,16 @@ fn test_06_kernel_enabled() {
 }
 
 #[test]
-fn test_07_mount_point() {
-    test_generation("07-mount-point").unwrap();
+fn test_07_plain_device() {
+    test_generation("07-plain-device").unwrap();
 }
 
 #[test]
-fn test_08_plain_device() {
-    test_generation("08-plain-device").unwrap();
+fn test_08_mount_point() {
+    test_generation("08-mount-point").unwrap();
+}
+
+#[test]
+fn test_09_mount_options() {
+    test_generation("09-mount-options").unwrap();
 }

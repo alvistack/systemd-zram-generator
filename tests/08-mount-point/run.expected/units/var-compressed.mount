@@ -7,5 +7,7 @@ Requires=systemd-zram-setup@zram11.service
 After=systemd-zram-setup@zram11.service
 
 [Mount]
+Where=/var/compressed
 What=/dev/zram11
-Where="/var/compressed"
+Type=ext4
+Options=

@@ -283,11 +283,15 @@ Requires=systemd-zram-setup@{zram_device}.service
 After=systemd-zram-setup@{zram_device}.service
 
 [Mount]
+Where={mount_point}
 What=/dev/{zram_device}
-Where={mount_point:?}
+Type={fs_type}
+Options={mount_options}
 ",
+            mount_point = device.mount_point.as_ref().unwrap().to_str().unwrap(),
             zram_device = device.name,
-            mount_point = device.mount_point.as_ref().unwrap(),
+            fs_type = device.fs_type.as_ref().unwrap(),
+            mount_options = device.mount_options.as_ref().unwrap_or(&String::new()),
         ),
     )?;
 

@@ -22,9 +22,10 @@ pub struct Device {
     pub disksize: u64,
 
     pub swap_priority: i32,
-    pub mount_point: Option<PathBuf>, // when set, a mount unit will be created
-    pub fs_type: Option<String>,      // useful mostly for mounts, None is the same
-                                      // as "swap" when mount_point is not set
+    pub mount_point: Option<PathBuf>,  // when set, a mount unit will be created
+    pub fs_type: Option<String>,       // useful mostly for mounts, None is the same
+                                       // as "swap" when mount_point is not set
+    pub mount_options: Option<String>, // when set, mount options will be applied
 }
 
 impl Device {
@@ -39,6 +40,7 @@ impl Device {
             swap_priority: 100,
             mount_point: None,
             fs_type: None,
+            mount_options: None,
         }
     }
 
@@ -293,6 +295,10 @@ fn parse_line(dev: &mut Device, key: &str, value: &str) -> Result<()> {
 
         "fs-type" => {
             dev.fs_type = Some(value.to_string());
+        }
+
+        "mount-options" => {
+            dev.mount_options = Some(value.to_string());
         }
 
         _ => {

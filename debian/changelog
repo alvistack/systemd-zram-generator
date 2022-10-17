@@ -1,0 +1,5 @@
+zram-generator (100:0.3.2-1) UNRELEASED; urgency=medium
+
+  * https://github.com/systemd/zram-generator/releases/tag/v0.3.2
+
+ -- Wong Hoi Sing Edison <hswong3i@gmail.com>  Sun, 22 Aug 2021 20:06:21 +0800

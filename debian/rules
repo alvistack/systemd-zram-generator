@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+
+SHELL := /bin/bash
+
+override_dh_auto_build:
+	set -ex && \
+		export SYSTEMD_UTIL_DIR=/lib/systemd && \
+		export SYSTEMD_SYSTEM_UNIT_DIR=/lib/systemd/system && \
+		export SYSTEMD_SYSTEM_GENERATOR_DIR=/lib/systemd/system-generators && \
+		cargo build --locked --offline --release && \
+		sed -e "s,@SYSTEMD_SYSTEM_GENERATOR_DIR@,/lib/systemd/system-generators," \
+			< units/systemd-zram-setup@.service.in \
+			> units/systemd-zram-setup@.service
+
+override_dh_auto_install:
+	install -Dpm755 -d debian/tmp/lib/systemd/system
+	install -Dpm755 -d debian/tmp/lib/systemd/system-generators
+	install -Dpm755 -d debian/tmp/usr/lib/systemd/
+	install -Dpm755 -d debian/tmp/usr/share/doc/zram-generator
+	install -Dpm644 -t debian/tmp/lib/systemd/system/ units/systemd-zram-setup@.service
+	install -Dpm644 -t debian/tmp/usr/lib/systemd/ usr/lib/systemd/zram-generator.conf
+	install -Dpm644 -t debian/tmp/usr/share/doc/zram-generator/ zram-generator.conf.example
+	install -Dpm755 -t debian/tmp/lib/systemd/system-generators/ target/release/zram-generator
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+
+%:
+	dh $@

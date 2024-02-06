@@ -1,0 +1,3 @@
+lib/systemd/system-generators/zram-generator
+lib/systemd/system/systemd-zram-setup@.service
+usr/share/doc/zram-generator/zram-generator.conf.example
